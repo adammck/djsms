@@ -19,6 +19,11 @@ class IncomingMessage(models.Model):
     received_at = models.DateTimeField()
     text        = models.TextField()
 
+    @classmethod
+    def poll(cls):
+        for msg in cls.objects.all():
+            msg.delete()
+
 
 class OutgoingMessage(models.Model):
     connection = models.ForeignKey(Connection)
