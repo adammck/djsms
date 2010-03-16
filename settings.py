@@ -11,6 +11,7 @@ ROOT_URLCONF = "urls"
 
 INSTALLED_APPS = (
     "sms",
+    "echo",
 
     # django admin
     "django.contrib.auth",
