@@ -10,16 +10,39 @@ from . import utils
 class Backend(models.Model):
     name = models.CharField(max_length=30, unique=True)
 
+    def __unicode__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<%s: %s>' %\
+            (type(self).__name__, self)
+
 
 class Connection(models.Model):
     backend  = models.ForeignKey(Backend)
     identity = models.CharField(max_length=100)
+
+    def __unicode__(self):
+        return "%s via %s" %\
+            (self.identity, self.backend)
+
+    def __repr__(self):
+        return '<%s: %s>' %\
+            (type(self).__name__, self)
 
 
 class IncomingMessage(models.Model):
     connection  = models.ForeignKey(Connection)
     received_at = models.DateTimeField()
     text        = models.TextField()
+
+    def __unicode__(self):
+        return 'From %s: "%s"' %\
+            (self.connection, self.text)
+
+    def __repr__(self):
+        return '<%s: %s>' %\
+            (type(self).__name__, self)
 
     def __init__(self, *args, **kwargs):
         models.Model.__init__(self, *args, **kwargs)
@@ -44,3 +67,11 @@ class IncomingMessage(models.Model):
 class OutgoingMessage(models.Model):
     connection = models.ForeignKey(Connection)
     text       = models.TextField()
+
+    def __unicode__(self):
+        return 'To %s: "%s"' %\
+            (self.connection, self.text)
+
+    def __repr__(self):
+        return '<%s: %s>' %\
+            (type(self).__name__, self)
