@@ -35,6 +35,7 @@ class IncomingMessage(models.Model):
     connection  = models.ForeignKey(Connection)
     received_at = models.DateTimeField()
     text        = models.TextField()
+    processed   = models.BooleanField()
 
     def __unicode__(self):
         return 'From %s: "%s"' %\
@@ -50,12 +51,15 @@ class IncomingMessage(models.Model):
 
     @classmethod
     def poll(cls):
-        for message in cls.objects.all():
+        for message in cls.objects.filter(processed=False):
             cls.process(message)
 
     def process(self):
         for handler in utils.sms_handlers():
             handler(self)
+
+        self.processed = True
+        self.save()
 
     def respond(self, text):
         self._responses.append(
