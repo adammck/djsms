@@ -32,7 +32,9 @@ class Connection(models.Model):
 
 
 class IncomingMessage(models.Model):
-    connection  = models.ForeignKey(Connection)
+    connection = models.ForeignKey(Connection, help_text=
+        "The connection which this message was sent by.")
+
     received_at = models.DateTimeField()
     text        = models.TextField()
     processed   = models.BooleanField()
@@ -62,15 +64,39 @@ class IncomingMessage(models.Model):
         self.save()
 
     def respond(self, text):
-        self._responses.append(
-            OutgoingMessage.objects.create(
-                connection=self.connection,
-                text=text))
+        Response.objects.create(
+            response_to=self,
+            text=text)
 
 
-class OutgoingMessage(models.Model):
-    connection = models.ForeignKey(Connection)
-    text       = models.TextField()
+class OutgoingBase(models.Model):
+    sent_at = models.DateTimeField(null=True, blank=True, help_text=
+        "The date and time which this message was sent by the relevant "
+        "backend. If this field is blank, the message has not yet been "
+        "sent.")
+
+    text = models.TextField()
+
+    class Meta:
+        abstract = True
+
+
+class Response(OutgoingBase):
+    response_to = models.ForeignKey(IncomingMessage, help_text=
+        "The incoming message which this message was created in response to.")
+
+    def __unicode__(self):
+        return 'In response to %s: "%s"' %\
+            (self.response_to.connection, self.text)
+
+    def __repr__(self):
+        return '<%s: %s>' %\
+            (type(self).__name__, self)
+
+
+class OutgoingMessage(OutgoingBase):
+    connection = models.ForeignKey(Connection, help_text=
+        "The recipient of this message.")
 
     def __unicode__(self):
         return 'To %s: "%s"' %\
