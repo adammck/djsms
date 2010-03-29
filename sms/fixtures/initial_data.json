@@ -1,0 +1,33 @@
+[
+    {
+        "pk": 1,
+        "model": "sms.backend",
+        "fields": {
+            "name": "demo"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "sms.connection",
+        "fields": {
+            "identity": "adammck",
+            "backend": 1
+        }
+    },
+    {
+        "pk": 2,
+        "model": "sms.connection",
+        "fields": {
+            "identity": "ewheeler",
+            "backend": 1
+        }
+    },
+    {
+        "pk": 3,
+        "model": "sms.connection",
+        "fields": {
+            "identity": "mejymejy",
+            "backend": 1
+        }
+    }
+]
