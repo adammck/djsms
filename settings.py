@@ -2,6 +2,10 @@
 # vim: et ts=4 sw=4
 
 
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
+
+
 DATABASE_ENGINE = "sqlite3"
 DATABASE_NAME   = "db.sqlite3"
 
