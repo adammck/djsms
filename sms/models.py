@@ -9,6 +9,7 @@ from . import utils
 
 class Backend(models.Model):
     name = models.CharField(max_length=30, unique=True)
+    objects = managers.BackendManager()
 
     def __unicode__(self):
         return self.name
@@ -16,6 +17,29 @@ class Backend(models.Model):
     def __repr__(self):
         return '<%s: %s>' %\
             (type(self).__name__, self)
+
+    @staticmethod
+    def _downcase_keys(config):
+        return dict([
+            (key.lower(), val)
+            for key, val in config.iteritems()
+        ])
+
+    def _config(self):
+        config = settings.INSTALLED_BACKENDS[self.name]
+        return (config.pop("ENGINE"), config)
+
+    @property
+    def engine(self):
+        if not hasattr(self, "_engine"):
+            module_name, kwargs = self._config()
+            cls = utils.get_backend_engine(module_name)
+            self._engine = cls(self, **self._downcase_keys(kwargs))
+
+        return self._engine
+
+    def poll(self):
+        self.engine.poll()
 
 
 class Connection(models.Model):

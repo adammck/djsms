@@ -22,3 +22,12 @@ INSTALLED_APPS = (
     "django.contrib.admin",
     'django.contrib.sessions',
     "django.contrib.contenttypes")
+
+
+INSTALLED_BACKENDS = {
+    "irc": {
+        "ENGINE":  "sms.backends.irc",
+        "HOST":    "irc.freenode.net",
+        "CHANNEL": "#djsms",
+    }
+}

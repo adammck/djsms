@@ -8,6 +8,11 @@ from django.utils import importlib
 from django.conf import settings
 
 
+def get_backend_engine(module_name):
+    module = _import(module_name)
+    return module.Engine
+
+
 def sms_handlers():
     return flatten([
         _handlers(module)
