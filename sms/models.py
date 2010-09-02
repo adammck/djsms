@@ -2,8 +2,10 @@
 # vim: et ts=4 sw=4
 
 
+from datetime import datetime
 from django.conf import settings
 from django.db import models
+from . import managers
 from . import utils
 
 
@@ -40,6 +42,13 @@ class Backend(models.Model):
 
     def poll(self):
         self.engine.poll()
+
+        for cls in [Response, OutgoingMessage]:
+            for msg in cls.objects.filter(sent_at=None):
+                if msg.connection.backend == self:
+                    self.engine.send(msg)
+                    msg.sent_at = datetime.now()
+                    msg.save()
 
 
 class Connection(models.Model):
@@ -116,6 +125,10 @@ class Response(OutgoingBase):
     def __repr__(self):
         return '<%s: %s>' %\
             (type(self).__name__, self)
+
+    @property
+    def connection(self):
+        return self.response_to.connection
 
 
 class OutgoingMessage(OutgoingBase):
