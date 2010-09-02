@@ -2,15 +2,12 @@
 # vim: et ts=4 sw=4
 
 
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
-
-
-DATABASE_ENGINE = "sqlite3"
-DATABASE_NAME   = "db.sqlite3"
-
-
-ROOT_URLCONF = "urls"
+DATABASES = {
+    "default": {
+        "ENGINE": "sqlite3",
+        "NAME": "db.sqlite3"
+    }
+}
 
 
 INSTALLED_APPS = (
@@ -21,7 +18,8 @@ INSTALLED_APPS = (
     "django.contrib.auth",
     "django.contrib.admin",
     'django.contrib.sessions',
-    "django.contrib.contenttypes")
+    "django.contrib.contenttypes"
+)
 
 
 INSTALLED_BACKENDS = {
@@ -31,3 +29,6 @@ INSTALLED_BACKENDS = {
         "CHANNEL": "#djsms",
     }
 }
+
+
+ROOT_URLCONF = "urls"
