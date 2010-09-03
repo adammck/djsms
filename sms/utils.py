@@ -8,9 +8,25 @@ from django.utils import importlib
 from django.conf import settings
 
 
-def get_backend_engine(module_name):
-    module = _import(module_name)
-    return module.Engine
+def spawn_engine(backend_name):
+    module_name, kwargs = _backend_config(backend_name)
+    return _engine_class(module_name)(backend_name, **kwargs)
+
+
+def _engine_class(module_name):
+    return _import(module_name).Engine
+
+
+def _backend_config(backend_name):
+    config = settings.INSTALLED_BACKENDS[backend_name]
+    return (config.pop("ENGINE"), _lower_keys(config))
+
+
+def _lower_keys(dict_):
+    return dict([
+        (key.lower(), val)
+        for key, val in dict_.iteritems()
+    ])
 
 
 def sms_handlers():

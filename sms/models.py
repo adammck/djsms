@@ -20,23 +20,11 @@ class Backend(models.Model):
         return '<%s: %s>' %\
             (type(self).__name__, self)
 
-    @staticmethod
-    def _downcase_keys(config):
-        return dict([
-            (key.lower(), val)
-            for key, val in config.iteritems()
-        ])
-
-    def _config(self):
-        config = settings.INSTALLED_BACKENDS[self.name]
-        return (config.pop("ENGINE"), config)
-
     @property
     def engine(self):
         if not hasattr(self, "_engine"):
-            module_name, kwargs = self._config()
-            cls = utils.get_backend_engine(module_name)
-            self._engine = cls(self.name, **self._downcase_keys(kwargs))
+            self._engine = utils.spawn_engine(
+                self.name)
 
         return self._engine
 
