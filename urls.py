@@ -4,7 +4,15 @@
 
 from django.conf.urls.defaults import *
 from django.contrib import admin
-admin.autodiscover()
+
+
+try:
+    admin.autodiscover()
+
+# ignore 'already registered' errors, which are caused by nose
+# importing this module by multiple names. (this is new to me.)
+except admin.sites.AlreadyRegistered:
+    pass
 
 
 urlpatterns = patterns("",

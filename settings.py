@@ -11,6 +11,7 @@ DATABASES = {
 
 
 INSTALLED_APPS = (
+    "django_nose",
     "sms",
     "echo",
 
@@ -32,3 +33,4 @@ INSTALLED_BACKENDS = {
 
 
 ROOT_URLCONF = "urls"
+TEST_RUNNER = "django_nose.NoseTestSuiteRunner"
