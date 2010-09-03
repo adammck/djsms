@@ -34,3 +34,4 @@ INSTALLED_BACKENDS = {
 
 ROOT_URLCONF = "urls"
 TEST_RUNNER = "django_nose.NoseTestSuiteRunner"
+NOSE_ARGS = ["--with-doctest", "--with-coverage", "--cover-package=djsms"]
