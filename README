@@ -1,0 +1,10 @@
+Put this in your pipe
+
+    def echo(msg):
+        if msg.text.startswith("echo "):
+            msg.respond(msg.text[5:])
+
+and smoke it
+
+    ./manage.py runbackend
+    ./manage.py runrouter
