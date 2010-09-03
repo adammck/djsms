@@ -3,10 +3,9 @@
 
 
 from datetime import datetime
-from django.conf import settings
 from django.db import models
-from . import managers
-from . import utils
+from django.conf import settings
+from djsms import utils, managers
 
 
 class Backend(models.Model):

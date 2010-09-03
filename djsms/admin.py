@@ -3,7 +3,7 @@
 
 
 from django.contrib import admin
-from . import models
+from djsms import models
 
 
 admin.site.register(models.Backend)

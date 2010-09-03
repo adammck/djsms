@@ -5,7 +5,7 @@
 import random
 import string
 import irclib
-from .base import EngineBase
+from djsms.backends.base import EngineBase
 
 
 class Engine(EngineBase):

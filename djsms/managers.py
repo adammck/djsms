@@ -4,7 +4,7 @@
 
 from django.conf import settings
 from django.db import models
-from . import utils
+from djsms import utils
 
 
 class BackendManager(models.Manager):

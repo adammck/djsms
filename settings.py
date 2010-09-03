@@ -12,7 +12,7 @@ DATABASES = {
 
 INSTALLED_APPS = (
     "django_nose",
-    "sms",
+    "djsms",
     "echo",
 
     # django admin

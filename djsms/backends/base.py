@@ -3,7 +3,7 @@
 
 
 from datetime import datetime
-from ..models import Backend, Connection, IncomingMessage
+from djsms.models import Backend, Connection, IncomingMessage
 
 
 class EngineBase(object):
