@@ -36,7 +36,7 @@ class Backend(models.Model):
         if not hasattr(self, "_engine"):
             module_name, kwargs = self._config()
             cls = utils.get_backend_engine(module_name)
-            self._engine = cls(self, **self._downcase_keys(kwargs))
+            self._engine = cls(self.name, **self._downcase_keys(kwargs))
 
         return self._engine
 

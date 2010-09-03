@@ -3,12 +3,17 @@
 
 
 from datetime import datetime
-from ..models import Connection, IncomingMessage
+from ..models import Backend, Connection, IncomingMessage
 
 
 class EngineBase(object):
-    def __init__(self, backend):
-        self.backend = backend
+    def __init__(self, backend_name):
+        self.backend_name = backend_name
+
+    @property
+    def backend(self):
+        return Backend.objects.get(
+            name=self.backend_name)
 
     def incoming(self, identity, text, received_at=None):
         if received_at is None:

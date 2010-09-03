@@ -9,8 +9,8 @@ from .base import EngineBase
 
 
 class Engine(EngineBase):
-    def __init__(self, backend, host="irc.freenode.net", port=6667, channel="#djsms", nick=None, timeout=1):
-        self.backend = backend
+    def __init__(self, backend_name, host="irc.freenode.net", port=6667, channel="#djsms", nick=None, timeout=1):
+        self.backend_name = backend_name
 
         self.host = host
         self.port = port
