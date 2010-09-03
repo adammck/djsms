@@ -25,7 +25,7 @@ INSTALLED_APPS = (
 
 INSTALLED_BACKENDS = {
     "irc": {
-        "ENGINE":  "sms.backends.irc",
+        "ENGINE":  "djsms.backends.irc",
         "HOST":    "irc.freenode.net",
         "CHANNEL": "#djsms",
     }
